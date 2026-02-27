@@ -2,7 +2,7 @@
 
 function exportExcel(data, filename, sheetName) {
   if (typeof XLSX === 'undefined') {
-    showToast('Bibliothèque Excel non chargée', 'error'); return;
+    showToast(t('error_lib_excel'), 'error'); return;
   }
   const ws = XLSX.utils.json_to_sheet(data);
   const wb = XLSX.utils.book_new();

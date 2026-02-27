@@ -43,7 +43,7 @@ function buildTab9HTML() {
           <label class="btn btn-secondary">
             ${t('import_json')} <input type="file" id="importJSONInput" accept=".json" style="display:none">
           </label>
-          ${isAdmin() ? `<button class="btn btn-danger" id="btnResetData">Réinitialiser les données</button>` : ''}
+          ${isAdmin() ? `<button class="btn btn-danger" id="btnResetData">${t('reset_data')}</button>` : ''}
         </div>
         ${isAdmin() ? buildUserManagementHTML() : ''}
       </div>
@@ -65,7 +65,7 @@ function buildUserManagementHTML() {
         </tr>`).join('')}
       </tbody>
     </table>
-    <button class="btn btn-primary btn-sm" id="btnAddUser">Ajouter utilisateur</button>`;
+    <button class="btn btn-primary btn-sm" id="btnAddUser">${t('add_user')}</button>`;
 }
 
 function bindTab9Events() {
@@ -111,7 +111,7 @@ function openAddUserModal() {
       <button class="btn btn-primary" onclick="saveNewUser()">${t('save')}</button>
       <button class="btn btn-secondary" onclick="closeModal()">${t('cancel')}</button>
     </div>`;
-  openModal(content, 'Ajouter utilisateur');
+  openModal(content, t('add_user'));
 }
 
 function saveNewUser() {

@@ -7,7 +7,7 @@ function renderTab4() {
 }
 
 function buildTab4HTML() {
-  const agents = [...STATE.agents].sort((a, b) => a.matricule - b.matricule);
+  const agents = [...STATE.agents].sort((a, b) => (a.matricule || 0) - (b.matricule || 0));
   return `
     <div class="card">
       <div class="card-header">

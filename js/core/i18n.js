@@ -46,7 +46,18 @@ const I18N = {
     loading: 'Chargement…',
     generate: 'Générer',
     planning_generated: 'Planning généré avec succès',
-    today: "Aujourd'hui"
+    today: "Aujourd'hui",
+    error_element_not_found: 'Élément introuvable',
+    error_lib_pdf: 'Bibliothèque PDF non chargée',
+    error_lib_excel: 'Bibliothèque Excel non chargée',
+    error_import_json: 'Erreur import JSON',
+    error_agents_different: 'Les deux agents doivent être différents',
+    error_login: 'Identifiants incorrects',
+    clear_logs: 'Vider les logs',
+    reset_data: 'Réinitialiser les données',
+    add_user: 'Ajouter utilisateur',
+    nb_duties: 'Nb permanences',
+    user: 'Utilisateur'
   },
   ar: {
     app_title: 'جدول النوبة',
@@ -94,7 +105,18 @@ const I18N = {
     loading: 'جارٍ التحميل…',
     generate: 'توليد',
     planning_generated: 'تم توليد الجدول بنجاح',
-    today: 'اليوم'
+    today: 'اليوم',
+    error_element_not_found: 'العنصر غير موجود',
+    error_lib_pdf: 'مكتبة PDF غير محملة',
+    error_lib_excel: 'مكتبة Excel غير محملة',
+    error_import_json: 'خطأ في استيراد JSON',
+    error_agents_different: 'يجب أن يكون العونان مختلفين',
+    error_login: 'بيانات الاعتماد غير صحيحة',
+    clear_logs: 'مسح السجلات',
+    reset_data: 'إعادة تهيئة البيانات',
+    add_user: 'إضافة مستخدم',
+    nb_duties: 'عدد النوبات',
+    user: 'مستخدم'
   }
 };
 

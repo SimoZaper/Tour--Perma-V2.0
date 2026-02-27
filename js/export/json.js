@@ -25,7 +25,7 @@ function importJSONFile(file) {
       showToast(t('settings_saved'), 'success');
       addLog('import', 'Import JSON: ' + file.name);
     } catch (err) {
-      showToast('Erreur import JSON', 'error');
+      showToast(t('error_import_json'), 'error');
     }
   };
   reader.readAsText(file);

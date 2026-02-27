@@ -25,7 +25,7 @@ function validateEchange(echange) {
   if (!echange.date1)  errors.push(t('error_required') + ': date1');
   if (!echange.date2)  errors.push(t('error_required') + ': date2');
   if (echange.agent1 && echange.agent2 && echange.agent1 === echange.agent2) {
-    errors.push('Les deux agents doivent être différents');
+    errors.push(t('error_agents_different'));
   }
   return errors;
 }

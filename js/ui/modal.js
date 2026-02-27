@@ -11,7 +11,10 @@ function openModal(content, title = '') {
       <div class="modal-body">${content}</div>
     </div>`;
   overlay.style.display = 'flex';
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); }, { once: true });
+  // Remove any previous listener before adding a new one
+  if (overlay._backdropHandler) overlay.removeEventListener('click', overlay._backdropHandler);
+  overlay._backdropHandler = e => { if (e.target === overlay) closeModal(); };
+  overlay.addEventListener('click', overlay._backdropHandler);
 }
 
 function closeModal() {

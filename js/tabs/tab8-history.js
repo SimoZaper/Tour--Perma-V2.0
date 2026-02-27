@@ -12,7 +12,7 @@ function buildTab8HTML() {
     <div class="card">
       <div class="card-header">
         <h3>${t('tab8')}</h3>
-        ${isAdmin() ? `<button class="btn btn-sm btn-danger" id="btnClearLogs">Vider les logs</button>` : ''}
+        ${isAdmin() ? `<button class="btn btn-sm btn-danger" id="btnClearLogs">${t('clear_logs')}</button>` : ''}
       </div>
       <div class="card-body">
         ${logs.length === 0 ? `<p>${t('no_data')}</p>` : `

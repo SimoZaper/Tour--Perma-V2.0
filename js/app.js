@@ -44,7 +44,7 @@ function handleLogin() {
   if (doLogin(username, password)) {
     showApp();
   } else {
-    showToast('Identifiants incorrects', 'error');
+    showToast(t('error_login'), 'error');
   }
 }
 

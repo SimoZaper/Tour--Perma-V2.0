@@ -2,9 +2,9 @@
 
 function exportPDF(elementId, filename) {
   const el = document.getElementById(elementId);
-  if (!el) { showToast('Élément introuvable', 'error'); return; }
+  if (!el) { showToast(t('error_element_not_found'), 'error'); return; }
   if (typeof html2canvas === 'undefined' || typeof window.jspdf === 'undefined') {
-    showToast('Bibliothèque PDF non chargée', 'error'); return;
+    showToast(t('error_lib_pdf'), 'error'); return;
   }
   html2canvas(el).then(canvas => {
     const imgData = canvas.toDataURL('image/png');

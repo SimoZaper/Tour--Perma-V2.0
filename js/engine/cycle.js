@@ -30,7 +30,7 @@ function calcCycleFromPrev(agents) {
 }
 
 function getDutyAgentIdx(cycle, dateISO, assignedSoFar) {
-  // R07 : finds next available agent in cycle
+  // R07 : finds next available agent in cycle (reserved for future multi-duty-per-day support)
   // assignedSoFar is a Set of agent names already assigned on dateISO
   for (let i = 0; i < cycle.length; i++) {
     if (!assignedSoFar.has(cycle[i])) return i;
@@ -39,6 +39,6 @@ function getDutyAgentIdx(cycle, dateISO, assignedSoFar) {
 }
 
 function rotateCycle(cycle, fromIdx) {
-  // R08 : rotates cycle so next starts after fromIdx
+  // R08 : rotates cycle so next starts after fromIdx (reserved for future partial-rebuild use)
   return [...cycle.slice(fromIdx + 1), ...cycle.slice(0, fromIdx + 1)];
 }

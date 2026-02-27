@@ -28,10 +28,14 @@ function loadState() {
   }
 }
 
-// Migration: btoa passwords → FNV-1a hash (runs only once; new hashes are 8 hex chars = length 8)
+// FNV-1a hashes are exactly 8 hex characters; base64-encoded passwords are longer.
+// Any stored password shorter than MIN_HASHED_PWD_LEN is assumed to be a legacy btoa value.
+const MIN_HASHED_PWD_LEN = 20;
+
+// Migration: btoa passwords → FNV-1a hash
 function migratePasswords(users) {
   return users.map(u => {
-    if (u.pwd && u.pwd.length < 20) {
+    if (u.pwd && u.pwd.length < MIN_HASHED_PWD_LEN) {
       try {
         u.pwd = hashPwd(atob(u.pwd));
       } catch (e) {

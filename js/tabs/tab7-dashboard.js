@@ -41,7 +41,7 @@ function buildAgentStatsTable(agents) {
   const counts = {};
   STATE.planning.forEach(p => { counts[p.agentNom] = (counts[p.agentNom] || 0) + 1; });
   return `<table class="table">
-    <thead><tr><th>${t('agent')}</th><th>Nb permanences</th></tr></thead>
+    <thead><tr><th>${t('agent')}</th><th>${t('nb_duties')}</th></tr></thead>
     <tbody>
       ${agents.map(a => `<tr>
         <td>${renderAvatar(a.nom)} ${escHtml(a.nom)}</td>
