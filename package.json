@@ -1,0 +1,12 @@
+{
+  "name": "permanence-exp",
+  "version": "1.0.0",
+  "description": "Tour de Permanence EXP — SPA multi-fichiers",
+  "scripts": {
+    "dev": "npx serve . -p 3000",
+    "build": "echo 'No build step required for vanilla JS SPA'"
+  },
+  "keywords": ["permanence", "planning", "spa"],
+  "author": "",
+  "license": "MIT"
+}

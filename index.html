@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tour de Permanence — EXP</title>
+  <style>
+    @font-face {
+      font-family: 'Cairo';
+      src: url('assets/fonts/cairo/Cairo-Regular.woff2') format('woff2');
+      font-weight: 400; font-style: normal;
+    }
+    @font-face {
+      font-family: 'Cairo';
+      src: url('assets/fonts/cairo/Cairo-SemiBold.woff2') format('woff2');
+      font-weight: 600; font-style: normal;
+    }
+    @font-face {
+      font-family: 'Cairo';
+      src: url('assets/fonts/cairo/Cairo-Bold.woff2') format('woff2');
+      font-weight: 700; font-style: normal;
+    }
+  </style>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/tabs.css">
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="loginPage">
+    <div class="login-box">
+      <img src="assets/img/logo.svg" alt="Logo" style="display:block;margin:0 auto 1rem;width:64px;">
+      <h2>Tour de Permanence</h2>
+      <div class="form-group">
+        <label for="loginUsername">Utilisateur</label>
+        <input type="text" id="loginUsername" class="form-control" placeholder="admin" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label for="loginPassword">Mot de passe</label>
+        <input type="password" id="loginPassword" class="form-control" placeholder="••••••" autocomplete="current-password">
+      </div>
+      <button id="btnLogin" class="btn btn-primary w-100">Connexion</button>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="appPage" style="display:none">
+    <header class="app-header">
+      <img src="assets/img/logo.svg" alt="Logo" class="logo">
+      <span class="app-title" data-i18n="app_title">Tour de Permanence</span>
+      <div class="header-actions">
+        <span id="currentUser"></span>
+        <button id="langToggle" class="btn btn-secondary btn-sm" title="Toggle language">FR/AR</button>
+        <button id="themeToggle" class="btn btn-secondary btn-sm" title="Toggle theme">🌙</button>
+        <button id="btnLogout" class="btn btn-secondary btn-sm" data-i18n="logout">Déconnexion</button>
+      </div>
+    </header>
+    <nav class="app-navbar">
+      <button class="nav-tab active" data-tab="1" data-i18n="tab1">Accueil</button>
+      <button class="nav-tab" data-tab="2" data-i18n="tab2">Tours précédents</button>
+      <button class="nav-tab" data-tab="3" data-i18n="tab3">Planning</button>
+      <button class="nav-tab" data-tab="4" data-i18n="tab4">Agents</button>
+      <button class="nav-tab" data-tab="5" data-i18n="tab5">Repos &amp; Absences</button>
+      <button class="nav-tab" data-tab="6" data-i18n="tab6">Échanges</button>
+      <button class="nav-tab" data-tab="7" data-i18n="tab7">Tableau de bord</button>
+      <button class="nav-tab" data-tab="8" data-i18n="tab8">Historique</button>
+      <button class="nav-tab" data-tab="9" data-i18n="tab9">Paramètres</button>
+    </nav>
+    <main class="app-main">
+      <div id="contentArea"></div>
+      <aside id="appSidebar" style="display:none"></aside>
+    </main>
+    <footer class="app-footer">
+      Tour de Permanence EXP &copy; 2025
+    </footer>
+  </div>
+
+  <!-- MODALES -->
+  <div id="modalOverlay"></div>
+  <div id="quickModalOverlay"></div>
+
+  <!-- TOASTS -->
+  <div id="toastContainer"></div>
+
+  <!-- Libs locales -->
+  <script src="libs/xlsx.full.min.js"></script>
+  <script src="libs/jspdf.umd.min.js"></script>
+  <script src="libs/html2canvas.min.js"></script>
+  <script src="libs/chart.umd.min.js"></script>
+
+  <!-- App JS (ordre important) -->
+  <script src="js/core/constants.js"></script>
+  <script src="js/core/state.js"></script>
+  <script src="js/core/storage.js"></script>
+  <script src="js/core/i18n.js"></script>
+  <script src="js/auth/auth.js"></script>
+  <script src="js/engine/availability.js"></script>
+  <script src="js/engine/cycle.js"></script>
+  <script src="js/engine/planning.js"></script>
+  <script src="js/engine/validators.js"></script>
+  <script src="js/ui/toast.js"></script>
+  <script src="js/ui/theme.js"></script>
+  <script src="js/ui/modal.js"></script>
+  <script src="js/ui/avatar.js"></script>
+  <script src="js/export/pdf.js"></script>
+  <script src="js/export/excel.js"></script>
+  <script src="js/export/json.js"></script>
+  <script src="js/tabs/tab1-home.js"></script>
+  <script src="js/tabs/tab2-prevtours.js"></script>
+  <script src="js/tabs/tab3-planning.js"></script>
+  <script src="js/tabs/tab4-agents.js"></script>
+  <script src="js/tabs/tab5-repos.js"></script>
+  <script src="js/tabs/tab6-echanges.js"></script>
+  <script src="js/tabs/tab7-dashboard.js"></script>
+  <script src="js/tabs/tab8-history.js"></script>
+  <script src="js/tabs/tab9-settings.js"></script>
+  <script src="js/ui/router.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
