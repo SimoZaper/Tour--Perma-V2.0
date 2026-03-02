@@ -35,7 +35,7 @@ const MIN_HASHED_PWD_LEN = 20;
 // Migration: btoa passwords → FNV-1a hash
 function migratePasswords(users) {
   return users.map(u => {
-    if (u.pwd && u.pwd.length < MIN_HASHED_PWD_LEN) {
+    if (u.pwd && u.pwd.length < MIN_HASHED_PWD_LEN && !/^[0-9a-f]{8}$/.test(u.pwd)) {
       try {
         u.pwd = hashPwd(atob(u.pwd));
       } catch (e) {
