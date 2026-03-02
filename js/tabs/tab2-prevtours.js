@@ -21,7 +21,7 @@ function buildTab2HTML() {
             <tbody>
               ${tours.map(tour => `<tr>
                 <td>${formatDateFR(tour.dateISO)}</td>
-                <td>${escHtml(tour.agentNom)}</td>
+                <td>${renderAvatar(tour.agentNom, 24)} ${escHtml(tour.agentNom)}</td>
                 <td>${escHtml(tour.note || '')}</td>
                 ${isAdmin() ? `<td>
                   <button class="btn btn-sm btn-danger" data-id="${tour.id}" data-action="del-prev">✕</button>
@@ -42,38 +42,63 @@ function bindTab2Events() {
 
 function openAddPrevTourModal() {
   const agents = getActiveSorted();
+  const date = todayISO();
   const content = `
     <div class="form-group">
       <label>${t('date')}</label>
-      <input type="date" id="prevTourDate" class="form-control" value="${todayISO()}">
+      <input type="date" id="prevTourDate" class="form-control" value="${date}">
     </div>
     <div class="form-group">
-      <label>${t('agent')}</label>
-      <select id="prevTourAgent" class="form-control">
-        ${agents.map(a => `<option value="${escHtml(a.nom)}">${escHtml(a.nom)}</option>`).join('')}
-      </select>
+      <label>Note (optionnel)</label>
+      <input type="text" id="prevTourNote" class="form-control" placeholder="Note">
     </div>
-    <div class="form-group">
-      <label>Note</label>
-      <input type="text" id="prevTourNote" class="form-control" placeholder="Optionnel">
+    <p style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:0.5rem">
+      Cliquez sur un agent pour l'ajouter / retirer ce jour
+    </p>
+    <div class="agent-chips" id="prevTourChips">
+      ${buildPrevTourChips(date, agents)}
     </div>
     <div class="form-actions">
-      <button class="btn btn-primary" onclick="savePrevTour()">${t('save')}</button>
       <button class="btn btn-secondary" onclick="closeModal()">${t('cancel')}</button>
     </div>`;
   openModal(content, t('add') + ' — ' + t('tab2'));
+  bindPrevTourChipEvents(agents);
+  document.getElementById('prevTourDate').addEventListener('change', () => {
+    const d = document.getElementById('prevTourDate').value;
+    document.getElementById('prevTourChips').innerHTML = buildPrevTourChips(d, getActiveSorted());
+    bindPrevTourChipEvents(getActiveSorted());
+  });
 }
 
-function savePrevTour() {
-  const dateISO  = document.getElementById('prevTourDate').value;
-  const agentNom = document.getElementById('prevTourAgent').value;
-  const note     = document.getElementById('prevTourNote').value.trim();
-  if (!dateISO || !agentNom) { showToast(t('error_required'), 'error'); return; }
-  STATE.prevTours.push({ id: nextId(STATE.prevTours), dateISO, agentNom, note });
-  saveState();
-  closeModal();
-  renderTab2();
-  showToast(t('save'), 'success');
+function buildPrevTourChips(dateISO, agents) {
+  const assignedNames = new Set(
+    STATE.prevTours.filter(p => p.dateISO === dateISO).map(p => p.agentNom)
+  );
+  return agents.map(a => `
+    <span class="agent-chip ${assignedNames.has(a.nom) ? 'agent-chip-active' : ''}" data-agent="${escHtml(a.nom)}">
+      ${renderAvatar(a.nom, 24)} ${escHtml(a.nom)}
+    </span>
+  `).join('');
+}
+
+function bindPrevTourChipEvents(agents) {
+  document.querySelectorAll('#prevTourChips .agent-chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const dateISO  = document.getElementById('prevTourDate').value;
+      const note     = document.getElementById('prevTourNote').value.trim();
+      const agentNom = chip.dataset.agent;
+      const idx = STATE.prevTours.findIndex(p => p.dateISO === dateISO && p.agentNom === agentNom);
+      if (idx >= 0) {
+        STATE.prevTours.splice(idx, 1);
+        chip.classList.remove('agent-chip-active');
+      } else {
+        STATE.prevTours.push({ id: nextId(STATE.prevTours), dateISO, agentNom, note });
+        chip.classList.add('agent-chip-active');
+      }
+      saveState();
+      renderTab2();
+    });
+  });
 }
 
 function deletePrevTour(id) {

@@ -62,11 +62,46 @@ function openAgentModal(id) {
         <option value="false" ${agent && !agent.actif ? 'selected' : ''}>${t('inactive')}</option>
       </select>
     </div>
+    <div class="form-group">
+      <label>Photo</label>
+      ${agent && agent.photo ? `<div style="margin-bottom:0.5rem">${renderAvatar(agent.nom, 48)}</div>` : ''}
+      <input type="file" id="agentPhoto" class="form-control" accept="image/*">
+      ${agent && agent.photo ? `<button type="button" class="btn btn-sm btn-danger" style="margin-top:0.375rem" onclick="clearAgentPhoto(${id})">Supprimer la photo</button>` : ''}
+    </div>
     <div class="form-actions">
       <button class="btn btn-primary" onclick="saveAgent(${id || 'null'})">${t('save')}</button>
       <button class="btn btn-secondary" onclick="closeModal()">${t('cancel')}</button>
     </div>`;
   openModal(content, (id ? t('edit') : t('add')) + ' — ' + t('agent'));
+}
+
+function clearAgentPhoto(id) {
+  const a = STATE.agents.find(a => a.id === id);
+  if (a) { a.photo = null; saveState(); }
+  closeModal();
+  openAgentModal(id);
+}
+
+function resizeImageToDataURL(file, maxSize, quality, cb) {
+  const reader = new FileReader();
+  reader.onerror = () => { showToast('Erreur lecture fichier image', 'error'); cb(undefined); };
+  reader.onload = e => {
+    const img = new Image();
+    img.onerror = () => { showToast('Fichier image invalide', 'error'); cb(undefined); };
+    img.onload = () => {
+      let w = img.width, h = img.height;
+      if (w > maxSize || h > maxSize) {
+        if (w > h) { h = Math.round(h * maxSize / w); w = maxSize; }
+        else { w = Math.round(w * maxSize / h); h = maxSize; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+      cb(canvas.toDataURL('image/jpeg', quality));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 
 function saveAgent(id) {
@@ -75,16 +110,33 @@ function saveAgent(id) {
   const actif     = document.getElementById('agentActif').value === 'true';
   const errors = validateAgent({ nom, matricule });
   if (errors.length) { showToast(errors[0], 'error'); return; }
-  if (id) {
-    const a = STATE.agents.find(a => a.id === id);
-    if (a) { a.nom = nom; a.matricule = matricule; a.actif = actif; }
-  } else {
-    STATE.agents.push({ id: nextId(STATE.agents), nom, matricule, actif });
+
+  const photoInput = document.getElementById('agentPhoto');
+  const file = photoInput && photoInput.files[0];
+
+  function doSave(newPhoto) {
+    if (id) {
+      const a = STATE.agents.find(a => a.id === id);
+      if (a) {
+        a.nom = nom; a.matricule = matricule; a.actif = actif;
+        if (newPhoto !== undefined) a.photo = newPhoto;
+      }
+    } else {
+      STATE.agents.push({ id: nextId(STATE.agents), nom, matricule, actif, photo: newPhoto || null });
+    }
+    saveState();
+    closeModal();
+    renderTab4();
+    showToast(t('save'), 'success');
   }
-  saveState();
-  closeModal();
-  renderTab4();
-  showToast(t('save'), 'success');
+
+  if (file) {
+    resizeImageToDataURL(file, 200, 0.75, photo => {
+      if (photo !== undefined) doSave(photo);
+    });
+  } else {
+    doSave(undefined);
+  }
 }
 
 function deleteAgent(id) {

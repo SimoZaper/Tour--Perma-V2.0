@@ -12,6 +12,10 @@ function getAgentColor(agentNom) {
 }
 
 function renderAvatar(agentNom, size = 32) {
+  const agent = STATE.agents.find(a => a.nom === agentNom);
+  if (agent && agent.photo && /^data:image\//.test(agent.photo)) {
+    return `<img class="avatar" src="${agent.photo}" style="width:${size}px;height:${size}px;object-fit:cover" title="${escHtml(agentNom)}">`;
+  }
   const initials = agentNom.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
   const color = getAgentColor(agentNom);
   return `<span class="avatar" style="background:${color};width:${size}px;height:${size}px;font-size:${Math.floor(size*0.4)}px" title="${escHtml(agentNom)}">${escHtml(initials)}</span>`;

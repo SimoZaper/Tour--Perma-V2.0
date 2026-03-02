@@ -31,14 +31,19 @@ function buildTab3HTML() {
 function buildPlanningTable(entries) {
   if (entries.length === 0) return `<p>${t('no_data')}</p>`;
   const today = todayISO();
+  // Group by date (multiple agents per day supported)
+  const dates = [...new Set(entries.map(e => e.dateISO))];
   return `<table class="table table-striped planning-table">
     <thead><tr><th>${t('date')}</th><th>${t('agent')}</th><th>J+1 Récup</th></tr></thead>
     <tbody>
-      ${entries.map(p => `<tr class="${p.dateISO === today ? 'row-today' : ''}">
-        <td>${formatDateFR(p.dateISO)}</td>
-        <td>${renderAvatar(p.agentNom)} ${escHtml(p.agentNom)}</td>
-        <td>${formatDateFR(getRecupISO(p.dateISO))}</td>
-      </tr>`).join('')}
+      ${dates.map(dateISO => {
+        const dayEntries = entries.filter(e => e.dateISO === dateISO);
+        return `<tr class="${dateISO === today ? 'row-today' : ''}">
+          <td>${formatDateFR(dateISO)}</td>
+          <td>${dayEntries.map(p => renderAvatar(p.agentNom) + ' ' + escHtml(p.agentNom)).join('&nbsp; ')}</td>
+          <td>${formatDateFR(getRecupISO(dateISO))}</td>
+        </tr>`;
+      }).join('')}
     </tbody></table>`;
 }
 

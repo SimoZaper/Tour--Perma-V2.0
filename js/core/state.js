@@ -32,6 +32,10 @@ function getPlanByDate(dateISO) {
   return STATE.planning.find(p => p.dateISO === dateISO) || null;
 }
 
+function getPlansByDate(dateISO) {
+  return STATE.planning.filter(p => p.dateISO === dateISO);
+}
+
 function escHtml(str) {
   if (str === null || str === undefined) return '';
   return String(str)
