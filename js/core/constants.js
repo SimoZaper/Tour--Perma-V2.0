@@ -8,17 +8,17 @@ const MAX_CONNEXIONS_RETAINED = 200;
 const HASH_SALT               = 'EXP_PERM_2025';
 
 const AGENTS_INIT = [
-  { id: 1,  nom: 'Agent 1',  matricule: 1001, actif: true },
-  { id: 2,  nom: 'Agent 2',  matricule: 1002, actif: true },
-  { id: 3,  nom: 'Agent 3',  matricule: 1003, actif: true },
-  { id: 4,  nom: 'Agent 4',  matricule: 1004, actif: true },
-  { id: 5,  nom: 'Agent 5',  matricule: 1005, actif: true },
-  { id: 6,  nom: 'Agent 6',  matricule: 1006, actif: true },
-  { id: 7,  nom: 'Agent 7',  matricule: 1007, actif: true },
-  { id: 8,  nom: 'Agent 8',  matricule: 1008, actif: true },
-  { id: 9,  nom: 'Agent 9',  matricule: 1009, actif: true },
-  { id: 10, nom: 'Agent 10', matricule: 1010, actif: true },
-  { id: 11, nom: 'Agent 11', matricule: 1011, actif: true }
+  { id: 1,  nom: 'Tbeur',    matricule: 46881, actif: true, photo: null },
+  { id: 2,  nom: 'Bennaji',  matricule: 51220, actif: true, photo: null },
+  { id: 3,  nom: 'Brakech',  matricule: 58967, actif: true, photo: null },
+  { id: 4,  nom: 'Filahi',   matricule: 59085, actif: true, photo: null },
+  { id: 5,  nom: 'Baha',     matricule: 60822, actif: true, photo: null },
+  { id: 6,  nom: 'Future',   matricule: 66009, actif: true, photo: null },
+  { id: 7,  nom: 'Amzil',    matricule: 66219, actif: true, photo: null },
+  { id: 8,  nom: 'Founoun',  matricule: 69155, actif: true, photo: null },
+  { id: 9,  nom: 'Bouchait', matricule: 75285, actif: true, photo: null },
+  { id: 10, nom: 'Oudli',    matricule: 75466, actif: true, photo: null },
+  { id: 11, nom: 'Sejni',    matricule: 75743, actif: true, photo: null }
 ];
 
 const JOURS_FR = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
